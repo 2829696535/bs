@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.order.mapper.OrderMapper">
+    <insert id="createOrder" parameterType="org.example.pojo.Order" >
+        insert into  `order` (uuid,orderName,customerName,orderPrice,sellerName,orderDate,orderState)
+        values (#{uuid},#{orderName},#{customerName},#{orderPrice},#{sellerName},#{orderDate},#{orderState})
+    </insert>
+
+    <select id="selectOrder" resultType="org.example.pojo.Order" parameterType="org.example.pojo.Order">
+        SELECT *
+        FROM  `order`
+        WHERE  1=1
+        <if test="uuid != null and uuid != ''">
+            AND uuid = #{uuid}
+        </if>
+        <if test="workerName != null and workerName != ''">
+            AND workerName = #{workerName}
+        </if>
+        <if test="orderName != null and orderName != ''">
+            AND orderName = #{orderName}
+        </if>
+        <if test="sellerName != null and sellerName != ''">
+            AND sellerName = #{sellerName}
+        </if>
+        <if test="customerName != null and customerName != ''">
+            AND customerName = #{customerName}
+        </if>
+        <if test="orderPrice != null and orderPrice !=''">
+            AND orderPrice = #{orderPrice}
+        </if>
+        <if test="orderDate != null and orderDate != ''">
+            AND orderDate = #{orderDate}
+        </if>
+        <if test="orderState != null and orderState != ''">
+            AND orderState = #{orderState}
+        </if>
+
+
+    </select>
+    <select id="getAllOrders" resultType="org.example.pojo.Order" parameterType="org.example.pojo.Order">
+        select * from `order`
+        where 1=1
+        <if test="username != null and username != ''">
+            AND workerName = #{username}
+        </if>
+        order by orderDate desc;
+    </select>
+</mapper>
