@@ -16,4 +16,5 @@ public class Order {
     private String orderDate;
     private  String dealDate;
     private String orderState;
+    private  String carCard;
 }

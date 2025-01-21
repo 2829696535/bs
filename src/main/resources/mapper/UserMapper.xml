@@ -2,18 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.example.user.mapper.UserMapper">
-    <insert id="insertUser" parameterType="org.example.pojo.User" useGeneratedKeys="true" keyProperty="id">
-        insert into user (id,username,password,role,create_time)
-        values (#{id},#{username}, #{password}, #{role},#{createTime})
-    </insert>
-    <update id="updateUser" parameterType="org.example.pojo.User" useGeneratedKeys="true" keyProperty="id">
-        UPDATE user
-        SET username = #{username}, password = #{password}, role = #{role}
-        WHERE id = #{id}
-    </update>
-    <delete id="deleteUser" parameterType="org.example.pojo.User">
-              delete from user where usesname = #{usesname} ;
-         </delete>
+<resultMap id="userResultMap" type="org.example.pojo.User">
+    <result column="username" property="username"/>
+    <result column="password" property="password"/>
+    <result column="role" property="role"/>
+    <result column="create_time" property="createTime"/>
+</resultMap>
+
+
+    <select id="getAllUserList" resultMap="userResultMap">
+        select * from user where 1=1
+        <if test="username != null and username != ''">
+           and  username = #{username}</if>
+        <if test="role != null and role != ''">
+            and  role = #{role}</if>
+        order by create_time desc
+    </select>
 
 
 </mapper>

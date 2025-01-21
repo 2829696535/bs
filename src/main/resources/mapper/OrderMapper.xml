@@ -2,48 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.example.order.mapper.OrderMapper">
+    <resultMap id="orderResultMap" type="org.example.pojo.Order">
+        <result column="order_date" property="orderDate"/>
+        <result column="order_name" property="orderName"/>
+        <result column="order_price" property="orderPrice"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="order_state" property="orderState"/>
+        <result column="worker_name" property="workerName"/>
+        <result column="car_card" property="carCard"/>
+    </resultMap>
     <insert id="createOrder" parameterType="org.example.pojo.Order" >
-        insert into  `order` (uuid,orderName,customerName,orderPrice,sellerName,orderDate,orderState)
-        values (#{uuid},#{orderName},#{customerName},#{orderPrice},#{sellerName},#{orderDate},#{orderState})
+        insert into  `order` (uuid,order_name,customer_name,order_price,worker_name,order_date,order_state,deal_date,car_card)
+        values (#{uuid},#{orderName},#{customerName},#{orderPrice},#{sellerName},#{orderDate},#{orderState},#{dealDate},#{carCard})
     </insert>
 
-    <select id="selectOrder" resultType="org.example.pojo.Order" parameterType="org.example.pojo.Order">
-        SELECT *
-        FROM  `order`
-        WHERE  1=1
-        <if test="uuid != null and uuid != ''">
-            AND uuid = #{uuid}
+
+    <select id="getAllOrders" resultMap="orderResultMap">
+        select * from `order`
+        where 1=1
+        <if test="username != null and username != ''">
+            AND worker_name = #{username}
         </if>
-        <if test="workerName != null and workerName != ''">
-            AND workerName = #{workerName}
+        order by order_date desc;
+    </select>
+    <select id="getAllOrderList" resultType="java.util.Map">
+        SELECT
+        o.order_name as orderName,
+        o.customer_name as customerName,
+        o.car_card as carCard,
+        o.order_price as orderPrice,
+        o.worker_name as workerName,
+        o.order_date as orderDate,
+        o.order_state as orderState,
+        ois.inner_uuid,
+        s.service_id,
+        GROUP_CONCAT(s.service_name SEPARATOR ',') AS combined_service_names
+        FROM `order` o
+        left JOIN order_inner_service ois ON o.`uuid` = ois.`inner_uuid`
+        left JOIN service s ON ois.`service_id` = s.`service_id`
+        WHERE 1=1
+        <if test="username != null and username != ''">
+            AND o.worker_name = #{userName}
         </if>
         <if test="orderName != null and orderName != ''">
-            AND orderName = #{orderName}
+            AND o.order_name = #{orderName}
         </if>
-        <if test="sellerName != null and sellerName != ''">
-            AND sellerName = #{sellerName}
+        <if test="price != null and price != ''">
+            AND o.order_price >= #{price}
         </if>
         <if test="customerName != null and customerName != ''">
-            AND customerName = #{customerName}
+            AND o.customer_name = #{customerName}
         </if>
-        <if test="orderPrice != null and orderPrice !=''">
-            AND orderPrice = #{orderPrice}
+        <if test="carCard != null and carCard != ''">
+            AND o.car_card = #{carCard}
         </if>
-        <if test="orderDate != null and orderDate != ''">
-            AND orderDate = #{orderDate}
-        </if>
-        <if test="orderState != null and orderState != ''">
-            AND orderState = #{orderState}
+        <if test="service != null and service != ''">
+            AND s.service_name = #{serviceName}
         </if>
 
 
     </select>
-    <select id="getAllOrders" resultType="org.example.pojo.Order" parameterType="org.example.pojo.Order">
-        select * from `order`
-        where 1=1
-        <if test="username != null and username != ''">
-            AND workerName = #{username}
-        </if>
-        order by orderDate desc;
+    <select id="selectOrder" resultType="org.example.pojo.Order" parameterType="org.example.pojo.Order">
+
     </select>
 </mapper>

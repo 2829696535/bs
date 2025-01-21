@@ -91,7 +91,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!--<dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>2.0</version>
+        </dependency>-->
 
         <dependency>
             <groupId>com.mysql</groupId>
@@ -103,10 +107,15 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+       <!-- <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.3.0</version>
+        </dependency>-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.4.0</version> <!-- 请检查最新版本 -->
+            <version>1.4.7</version> <!-- 请检查最新版本 -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -133,6 +142,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

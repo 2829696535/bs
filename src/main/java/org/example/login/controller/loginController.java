@@ -1,6 +1,6 @@
 package org.example.login.controller;
 
-import org.example.user.service.impl.UserServiceImpl;
+import org.example.user.service.impl.UserService;
 import org.example.login.service.LoginService;
 import org.example.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/index")
 public class loginController {
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserService userService;
     @Autowired
     private LoginService loginService;
 

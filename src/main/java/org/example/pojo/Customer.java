@@ -1,6 +1,7 @@
 package org.example.pojo;
 
 import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class Customer {
     private String customerName;
-    private String customerId;//身份证号
-    private String gender;
+    private String customerId;//id
+//    private String gender;
     private String phoneNumber;
 
 }

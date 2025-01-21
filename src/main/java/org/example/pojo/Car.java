@@ -11,6 +11,6 @@ public class Car {
     private  String CarName;
     private  String CarCard;
     private  String IsEdit;
-    private  String OwnerId;
+    private  String phone;
 
 }
