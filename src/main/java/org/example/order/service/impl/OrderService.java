@@ -18,7 +18,8 @@ public class OrderService {
     @Autowired
     OrderMapper orderMapper;
 
-    public Order createOrder(Order order) {
+    public Order createOrder(Map<String,Object> map) {
+        Order order = new Order();
         order.setUuid(UUID.randomUUID().toString());
         order.setOrderDate(String.valueOf(LocalDateTime.now()));
         order.setOrderState("0"); //0--创建 1--处理
@@ -48,7 +49,18 @@ public class OrderService {
         map.put("list", p.getResult());
         map.put("total", p.getTotal());
         return map;
+    }
 
+    public Map<String,Object> getCustomerInfo(String phone) {
+        Map<String, Object> customerInfo = orderMapper.getCustomerInfo(phone);
+        if (customerInfo !=null) {
+            String id = customerInfo.get("id").toString();
+            List<Map<String, Object>> carInfo = orderMapper.getCarInfo(id);
+            customerInfo.put("carInfo", carInfo);
+            return customerInfo;
+        }else {
+            return  null;
+        }
 
     }
 }

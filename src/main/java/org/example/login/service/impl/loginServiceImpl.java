@@ -12,8 +12,6 @@ public class loginServiceImpl implements LoginService {
 
 @Autowired
     LoginMapper loginMapper;
-
-
     @Override
     public User getUser(String username, String password) {
         return loginMapper.getUser(username,password);

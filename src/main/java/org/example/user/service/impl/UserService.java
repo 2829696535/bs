@@ -44,7 +44,11 @@ public class UserService {
 
 
     public void updateUser(User user) {
-        userMapper.updateUser(user);
+        String id = user.getId();
+        String role = user.getRole();
+        String password = user.getPassword();
+        String username = user.getUsername();
+        userMapper.updateUser(id,username,password,role);
     }
 
 

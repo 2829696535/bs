@@ -52,8 +52,6 @@ public class OrderController {
         if (role.contains("admin")) {
             username = "";
         }
-
-
         Integer page = (Integer) map.get("page");
         Integer pageSize = (Integer) map.get("pagesize");
         Float price = null;
@@ -112,14 +110,21 @@ public class OrderController {
         System.out.println(response);
         return response;
     }
+
     @PostMapping("/create")
     public Order createOrder(@RequestBody Map<String, Object> map) {
-        String wokerName = (String) map.get("username");
-        Float price = Float.parseFloat((String) map.get("price"));
-        String customerName = (String) map.get("customerName");
-        String phone = (String) map.get("phone");
-        String carCard = (String) map.get("carCard");
+       orderService.createOrder(map);
 
         return null;
+    }
+
+    @PostMapping("/getCustomerInfo")
+    public Map<String, Object> getCustomerInfo(@RequestBody Map<String, Object> map) {
+        if (map.get("phoneNumber") != null) {
+            String phone = map.get("phoneNumber").toString();
+            return orderService.getCustomerInfo(phone);
+        } else {
+            return null;
+        }
     }
 }

@@ -5,11 +5,7 @@ import org.example.pojo.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-
+@Service
 public interface LoginService {
-
-
-
-@Select("SELECT  * FROM user where username=#{username} and password = #{password}")
     User getUser(String username, String password);
 }

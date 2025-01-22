@@ -20,6 +20,7 @@ public interface UserMapper {
     void deleteUser(@Param("id") Integer id);
 
 
-@Select("")
-    void updateUser(User user);
+@Update("update `user` set username =#{username},password = #{password},role =#{role} where id = #{id}")
+    void updateUser(@Param("id") String id,@Param("username") String username,@Param("password") String password,
+                    @Param("role") String role);
 }
