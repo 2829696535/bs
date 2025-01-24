@@ -8,4 +8,6 @@ public interface LoginService {
     User getUser(String username, String password);
 
     Map<String,Object> checkUserName(String username);
+
+    Map<String, Object> register(Map<String, Object> map);
 }

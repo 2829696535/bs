@@ -34,5 +34,10 @@ public class loginController {
         String username = map.get("username").toString();
         return loginService.checkUserName(username);
     }
+    @PostMapping("/register")
+    public Map<String,Object> register(@RequestBody Map<String,Object> map){
+
+        return loginService.register(map);
+    }
 
 }
