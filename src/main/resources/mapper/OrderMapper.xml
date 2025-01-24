@@ -11,10 +11,7 @@
         <result column="worker_name" property="workerName"/>
         <result column="car_card" property="carCard"/>
     </resultMap>
-    <insert id="createOrder" parameterType="org.example.pojo.Order" >
-        insert into  `order` (uuid,order_name,customer_name,order_price,worker_name,order_date,order_state,deal_date,car_card)
-        values (#{uuid},#{orderName},#{customerName},#{orderPrice},#{sellerName},#{orderDate},#{orderState},#{dealDate},#{carCard})
-    </insert>
+
 
 
     <select id="getAllOrders" resultMap="orderResultMap">
@@ -26,20 +23,18 @@
         order by order_date desc;
     </select>
     <select id="getAllOrderList" resultType="java.util.Map">
-        SELECT
-        o.order_name as orderName,
-        o.customer_name as customerName,
-        o.car_card as carCard,
-        o.order_price as orderPrice,
-        o.worker_name as workerName,
-        o.order_date as orderDate,
-        o.order_state as orderState,
-        ois.inner_uuid,
-        s.service_id,
-        GROUP_CONCAT(s.service_name SEPARATOR ',') AS combined_service_names
+        SELECT DISTINCT
+        o.order_name AS orderName,
+        o.customer_name AS customerName,
+        o.car_card AS carCard,
+        o.order_price AS orderPrice,
+        o.worker_name AS workerName,
+        o.order_date AS orderDate,
+        o.order_state AS orderState,
+        o.uuid
         FROM `order` o
-        left JOIN order_inner_service ois ON o.`uuid` = ois.`inner_uuid`
-        left JOIN service s ON ois.`service_id` = s.`service_id`
+        LEFT JOIN order_inner_service ois ON o.`uuid` = ois.`inner_uuid`
+        LEFT JOIN service s ON ois.`service_name` = s.`service_name`
         WHERE 1=1
         <if test="username != null and username != ''">
             AND o.worker_name = #{userName}

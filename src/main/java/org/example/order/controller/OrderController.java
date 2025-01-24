@@ -112,15 +112,16 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public Order createOrder(@RequestBody Map<String, Object> map) {
-       orderService.createOrder(map);
-
-        return null;
+    public Map<String, Object> createOrder(@RequestBody Map<String, Object> map) {
+        Map<String, Object> order = new HashMap<>();
+                orderService.createOrder(map);
+        order.put("code", 0);
+        return order;
     }
 
     @PostMapping("/getCustomerInfo")
     public Map<String, Object> getCustomerInfo(@RequestBody Map<String, Object> map) {
-        if (map.get("phoneNumber") != null) {
+        if (map.get("phoneNumber") != null &&map.get("phoneNumber") != "") {
             String phone = map.get("phoneNumber").toString();
             return orderService.getCustomerInfo(phone);
         } else {
