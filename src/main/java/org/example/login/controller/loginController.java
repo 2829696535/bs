@@ -1,6 +1,4 @@
 package org.example.login.controller;
-
-import org.example.user.service.impl.UserService;
 import org.example.login.service.LoginService;
 import org.example.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +12,6 @@ import java.util.Map;
 @RequestMapping("/index")
 public class loginController {
     @Autowired
-    private UserService userService;
-    @Autowired
     private LoginService loginService;
 
     @PostMapping(value = "/login")
@@ -26,13 +22,17 @@ public class loginController {
 
         User user = loginService.getUser(username, password);
 
-        Map<String,Object> response = new HashMap<String,Object>();
+        Map<String,Object> response = new HashMap<>();
         response.put("code", 0);
         response.put("msg", "");
         response.put("user",user);
         System.out.println(response);
         return response;
-
+    }
+    @PostMapping("/checkUserName")
+    public Map<String,Object> checkuserName(@RequestBody Map<String,Object> map){
+        String username = map.get("username").toString();
+        return loginService.checkUserName(username);
     }
 
 }
